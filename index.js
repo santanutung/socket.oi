@@ -10,42 +10,43 @@ const io = new Server(httpServer, {
     // options
 });
 
-io.on("connection", (socket) => {
-    console.log('new user added');
-
-
-    // clint to server 
-    socket.on('message', (msg) => {
-        console.log(msg);
-
-    })
-    // clint to server  custom event
-    socket.on('add_event', (msg) => {
-        console.log(msg);
-
-    })
-
-    setInterval(() => {
-        // server to clint    
-        let date = new Date();
-        socket.send(date);
-        // server to clint    custom event
-        let num = 1;
-        socket
-            .emit('custom_event', num);
-
-    }, 1000)
 
 
 
+// broadcasting
+
+// io.on("connection", (socket) => {
+//     console.log('new user added');
 
 
-    socket.on("disconnect", () => {
-        console.log('new user remove');
-        // ...
-    });
-    // ...
+
+//     io.sockets.emit('broadcasting_event_for_all', "hi good morning")
+
+//     socket.on("disconnect", () => {
+//         console.log('new user remove');
+//     });
+// });
+
+
+let buyNsp = io.of('/buy');
+buyNsp.on("connection", (socket) => {
+
+    io.sockets.emit('broadcasting_event_for_buy', "hi for sell")
+
+
 });
+
+let SellNsp = io.of('/sell');
+SellNsp.on("connection", (socket) => {
+
+
+
+
+    io.sockets.emit('broadcasting_event_for_sell', "hi for sell")
+
+
+});
+
 
 app.get('/', function (requst, response) {
     response.sendFile(__dirname + '/index.html')

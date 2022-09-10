@@ -17,33 +17,21 @@
 
 
     <script src="/socket.io/socket.io.js"></script>
-    <script>
-        const socket = io();
-        // server to clint    
-        socket.on('message', (msg) => {
+
+
+    <!-- broadcasting  -->
+    <!-- <script>
+        socket.on('broadcasting_event_for_all', (msg) => {
             console.log(msg);
 
         })
-        // server to clint    custom event
-        socket.on('custom_event', (msg) => {
+    </script> -->
+    <script>
+        const socket = io('/sell');
+        socket.on('broadcasting_event_for_sell', (msg) => {
             console.log(msg);
 
         })
-
-    </script>
-
-    <script>
-
-        function send() {
-            let number = document.getElementById('number').value
-            // clint to server 
-            socket.send(number);
-
-            // clint to server  custom event
-            socket.emit('add_event', number);
-            // console.log(number);
-
-        }
     </script>
 
 </body>
