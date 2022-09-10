@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <h1>test node</h1>
+
+    <input type="number" name="number" id="number">
+    <button onclick="send()" id="send">send</button>
+    <input type="number" name="value" id="value">
+
+
+    <script src="/socket.io/socket.io.js"></script>
+    <script>
+        const socket = io();
+        // server to clint    
+        socket.on('message', (msg) => {
+            console.log(msg);
+
+        })
+        // server to clint    custom event
+        socket.on('custom_event', (msg) => {
+            console.log(msg);
+
+        })
+
+    </script>
+
+    <script>
+
+        function send() {
+            let number = document.getElementById('number').value
+            // clint to server 
+            socket.send(number);
+
+            // clint to server  custom event
+            socket.emit('add_event', number);
+            // console.log(number);
+
+        }
+    </script>
+
+</body>
+
+</html>
